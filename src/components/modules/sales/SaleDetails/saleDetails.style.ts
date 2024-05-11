@@ -1,0 +1,160 @@
+import {StyleSheet} from 'react-native';
+import {
+  PRIMARY_COLOR,
+  TEXT_COLOR_PRIMARY,
+  TEXT_COLOR_SECONDARY,
+  TEXT_COLOR_TERTIARY,
+} from '../../../../contants/colors';
+import {P} from '@expo/html-elements';
+
+const saleDetailsStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  header: {
+    display: 'flex',
+    flexDirection: 'row',
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    gap: 20,
+    width: '100%',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'black',
+    display: 'flex',
+    flex: 1,
+  },
+  textPrimary: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: PRIMARY_COLOR,
+  },
+  textSecondary: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: TEXT_COLOR_PRIMARY,
+  },
+  textTertiary: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: TEXT_COLOR_TERTIARY,
+  },
+  textPrimaryInverse: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: TEXT_COLOR_SECONDARY,
+  },
+  textTertiaryInverse: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'lightsteelblue',
+  },
+  mapImg: {
+    width: 100,
+    height: 100,
+    borderRadius: 20,
+    backgroundColor: 'grey',
+  },
+  titleContainer: {
+    display: 'flex',
+    gap: 0,
+    flex: 1,
+  },
+  personalInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 10,
+    borderColor: 'blue',
+    width: '100%',
+    marginBottom: 26,
+  },
+  personalInfoItem: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 0,
+    paddingHorizontal: 20,
+    borderColor: 'black',
+    width: '100%',
+  },
+  telContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 10,
+  },
+  telInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 0,
+  },
+  telActions: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 10,
+  },
+  telButton: {
+    display: 'flex',
+    width: 45,
+    height: 45,
+    borderRadius: 10,
+    padding: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  telPhone: {
+    backgroundColor: 'lightblue',
+  },
+  telWhatsapp: {
+    backgroundColor: 'lightgreen',
+  },
+  results: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    gap: 10,
+    backgroundColor: PRIMARY_COLOR,
+    width: '100%',
+    borderTopStartRadius: 40,
+    borderTopEndRadius: 40,
+    // padding: 16,
+    height: 130,
+    paddingBottom: 35,
+  },
+  resultItem: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    borderColor: 'green',
+    // marginBottom: 35,
+  },
+  resultItemIconContainer: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    // backgroundColor: `#7ba1ff7a`,
+    backgroundColor: `#4e76ce`,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  saleInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 10,
+    width: '100%',
+    paddingVertical: 30,
+    borderTopStartRadius: 40,
+    borderTopEndRadius: 40,
+    marginTop: -35,
+    backgroundColor: 'white',
+  },
+});
+
+export default saleDetailsStyles;
