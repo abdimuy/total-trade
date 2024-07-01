@@ -14,7 +14,7 @@ const saleItemStyles = StyleSheet.create({
     borderRadius: 15,
     paddingVertical: 22,
     paddingHorizontal: 12,
-    gap: 24,
+    gap: 14,
     marginHorizontal: 10,
     shadowColor: 'black',
     shadowOffset: {
@@ -25,17 +25,40 @@ const saleItemStyles = StyleSheet.create({
     shadowRadius: 25,
     elevation: 16,
   },
+  isNew: {
+    backgroundColor: '#e1effe',
+  },
   details: {
     display: 'flex',
     flexDirection: 'row',
     gap: 15,
   },
   iconContainer: {
-    backgroundColor: 'palegreen',
     padding: 8,
     borderRadius: 10,
     height: 50,
     width: 50,
+  },
+  badgeNewContainer: {
+    display: 'flex',
+    backgroundColor: 'lightgreen',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 10,
+    //Box Shadow green big
+    shadowColor: 'green',
+    shadowOffset: {
+      width: 0,
+      height: 8,
+    },
+    shadowOpacity: 0.99,
+    shadowRadius: 25,
+    elevation: 16,
+  },
+  badgeNew: {
+    color: '#03543f',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   number: {
     color: PRIMARY_COLOR,
@@ -53,15 +76,17 @@ const saleItemStyles = StyleSheet.create({
     fontWeight: 'bold',
     color: TEXT_COLOR_PRIMARY,
     lineHeight: 24,
+    width: 'auto',
   },
   address: {
+    fontSize: 16,
     color: TEXT_COLOR_TERTIARY,
     width: 'auto',
   },
   progressContainer: {
     display: 'flex',
     flexDirection: 'column',
-    gap: 4,
+    gap: 10,
     paddingHorizontal: 8,
   },
   progressDetails: {
@@ -71,7 +96,7 @@ const saleItemStyles = StyleSheet.create({
     height: 17,
   },
   prograssCant: {
-    color: TEXT_COLOR_PRIMARY,
+    color: TEXT_COLOR_TERTIARY,
     fontWeight: 'bold',
     fontSize: 18,
     lineHeight: 20,

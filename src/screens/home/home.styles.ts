@@ -61,6 +61,12 @@ const homeStyles = StyleSheet.create({
     color: TEXT_COLOR_PRIMARY,
     lineHeight: 35,
   },
+  detailsColumnLabels: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 15,
+  },
   detailsTitleSecondary: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -130,6 +136,36 @@ const homeStyles = StyleSheet.create({
     width: '100%',
     height: 200,
     borderRadius: 20,
+  },
+  closeSesion: {
+    backgroundColor: PRIMARY_COLOR,
+    padding: 10,
+    borderRadius: 10,
+    width: '90%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginTop: 20,
+  },
+  closeSesionText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  paymentPrimaryText: {
+    color: PRIMARY_COLOR,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  paymentSecondaryText: {
+    color: SECONDARY_COLOR,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  paymentTertiaryText: {
+    color: TERCIARY_COLOR,
+    fontSize: 20,
   },
 });
 
