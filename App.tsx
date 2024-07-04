@@ -8,7 +8,7 @@ import DailyReport from './src/components/modules/reports/DailyReport/DailyRepor
 import WeeklyReport from './src/components/modules/reports/WeeklyReport/WeeklyReport';
 import LoginScreen from './src/screens/auth/login';
 import {Spinner, View} from '@gluestack-ui/themed';
-import {onAuthStateChanged} from 'firebase/auth';
+import {onAuthStateChanged, User as UserFB} from 'firebase/auth';
 import {auth} from './src/firebase/connection';
 import {User} from './src/screens/auth/getUser';
 import {Timestamp} from 'firebase/firestore';
@@ -26,8 +26,9 @@ export type RootDrawerParamList = {
 };
 
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
+
 export const AuthContext = React.createContext<{
-  user: any;
+  user: UserFB | null;
   setUser: React.Dispatch<React.SetStateAction<any>>;
   userData: User;
   setUserData: React.Dispatch<React.SetStateAction<User>>;
@@ -82,7 +83,7 @@ export interface SaleByDay {
 }
 
 const AuthProvider = ({children}: {children: React.ReactNode}) => {
-  const [user, setUser] = React.useState();
+  const [user, setUser] = React.useState<UserFB | null>(null);
   const [userData, setUserData] = React.useState<User>({
     COBRADOR_ID: 0,
     CREATED_AT: Timestamp.now(),
@@ -93,7 +94,6 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
     ID: '',
     ZONA_CLIENTE_ID: 0,
   });
-  console.log('userData', userData);
   const {sales, loading} = useSales(userData.ZONA_CLIENTE_ID);
   const [salesByDay, setSalesByDay] = React.useState<SaleByDay>({
     domingo: [],
@@ -165,7 +165,7 @@ function RootNav() {
   const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (authUser: any) => {
+    const unsubscribe = onAuthStateChanged(auth, authUser => {
       if (authUser) {
         setUser(authUser);
       } else {
@@ -180,7 +180,7 @@ function RootNav() {
   }, [user]);
 
   const {user: userData, loading: loadingUserData} = useGetUser(
-    user?.email,
+    user?.email as string,
     user,
   );
 
