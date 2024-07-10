@@ -80,7 +80,6 @@ const useGetPagosRuta = (zonaClienteId: number) => {
     const q = query(
       collection(db, PAGOS_COLLECTION),
       where('ZONA_CLIENTE_ID', '==', zonaClienteId),
-      orderBy('FECHA_HORA_PAGO', 'desc'),
       limit(5),
     );
 

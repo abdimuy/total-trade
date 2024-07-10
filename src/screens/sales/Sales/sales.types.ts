@@ -32,4 +32,5 @@ export interface Sale {
   ZONA_CLIENTE_ID: number;
   ZONA_NOMBRE: string;
   ESTADO_COBRANZA: string;
+  MONTO_A_CORTO_PLAZO: number;
 }

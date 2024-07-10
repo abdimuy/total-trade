@@ -1,6 +1,12 @@
 import {View, Text, StyleSheet, Pressable, ScrollView} from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
-import {Payment, PaymentWithCliente} from '../../sales/SaleDetails/SaleDetails';
+import {
+  CONDONACION_ID,
+  PAGO_CON_TRANSFERENCIA_ID,
+  PAGO_EN_EFECTIVO_ID,
+  Payment,
+  PaymentWithCliente,
+} from '../../sales/SaleDetails/SaleDetails';
 import {
   Timestamp,
   collection,
@@ -67,7 +73,15 @@ const WeeklyReport = () => {
     setPagosConCliente(pagosConCliente);
   }, [pagos, sales]);
 
-  const total = pagos.reduce((acc, pago) => acc + pago.IMPORTE, 0);
+  const total = pagos.reduce((acc, pago) => {
+    if (
+      pago.FORMA_COBRO_ID === PAGO_EN_EFECTIVO_ID ||
+      pago.FORMA_COBRO_ID === PAGO_CON_TRANSFERENCIA_ID
+    ) {
+      return acc + pago.IMPORTE;
+    }
+    return acc;
+  }, 0);
   const numeroPagos = pagos.length;
 
   const ticketText = `REPORTE SEMANAL DE COBRANZA
@@ -76,19 +90,41 @@ FECHA: ${dayjs().format('DD/MM/YYYY')}
 COBRADOR: ${userData.NOMBRE}
 
 --------------------------------
-
+PAGOS REALIZADOS
 ${pagosConCliente
+  .filter(
+    pago =>
+      pago.FORMA_COBRO_ID === PAGO_EN_EFECTIVO_ID ||
+      pago.FORMA_COBRO_ID === PAGO_CON_TRANSFERENCIA_ID,
+  )
   .map(pago => {
     return `${dayjs(pago.FECHA_HORA_PAGO.toDate()).format(
       'HH:mm',
-    )} ${pago.CLIENTE.slice(0, 20)} $ ${pago.IMPORTE}
+    )} ${pago?.CLIENTE?.slice(0, 20)} $ ${pago.IMPORTE}
+`;
+  })
+  .join('')}
+--------------------------------
+CONDONACIONES
+${pagosConCliente
+  .filter(pago => pago.FORMA_COBRO_ID === CONDONACION_ID)
+  .map(pago => {
+    return `${dayjs(pago.FECHA_HORA_PAGO.toDate()).format(
+      'HH:mm',
+    )} ${pago?.CLIENTE?.slice(0, 20)} $ ${pago.IMPORTE}
 `;
   })
   .join('')}
 --------------------------------
 
 Total: $ ${NEGRITAS_ON}${total}${NEGRITAS_OFF}
-Total de pagos: ${pagos.length}
+Total de pagos: ${
+    pagosConCliente.filter(
+      pago =>
+        pago.FORMA_COBRO_ID === PAGO_EN_EFECTIVO_ID ||
+        pago.FORMA_COBRO_ID === PAGO_CON_TRANSFERENCIA_ID,
+    ).length
+  }
 `;
 
   return (

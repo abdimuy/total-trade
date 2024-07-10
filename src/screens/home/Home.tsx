@@ -17,10 +17,7 @@ import {AuthContext} from '../../../App';
 import useGetPagosRuta from '../../hooks/useGetPagosRuta';
 import {
   Timestamp,
-  collection,
   doc,
-  getDocs,
-  updateDoc,
   writeBatch,
 } from 'firebase/firestore';
 import {db} from '../../firebase/connection';

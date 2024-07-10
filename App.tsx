@@ -218,7 +218,7 @@ function RootNav() {
             name="Sales"
             component={SalesNavigator}
             options={{
-              drawerLabel: 'Ventas',
+              drawerLabel: 'Clientes',
             }}
           />
           <Drawer.Screen

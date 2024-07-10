@@ -14,7 +14,7 @@ import {
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import saleDetailsStyles from './saleDetails.style';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {PRIMARY_COLOR, SECONDARY_COLOR} from '../../../../contants/colors';
+import {PRIMARY_COLOR} from '../../../../contants/colors';
 import MapView, {Marker} from 'react-native-maps';
 import dayjs from 'dayjs';
 import Geolocation from '@react-native-community/geolocation';
@@ -24,6 +24,7 @@ import {
   collection,
   doc,
   onSnapshot,
+  orderBy,
   query,
   where,
   writeBatch,
@@ -68,6 +69,8 @@ const SaleDetails = () => {
   const {saleId} = route.params;
   const navigation = useNavigation<SaleDetailsNavigationProp>();
   const {sale, loading} = useGetSale(saleId);
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisitaVisible, setModalVisitaVisible] = useState(false);
   const [modalMapVisible, setModalMapVisible] = useState(false);
@@ -296,6 +299,20 @@ const SaleDetails = () => {
     navigation.navigate('Payment', {paymentId: paymentId, saleId: saleId});
   };
 
+  const paymentsOrder = payments.sort(
+    (a, b) =>
+      b.FECHA_HORA_PAGO.toDate().getTime() -
+      a.FECHA_HORA_PAGO.toDate().getTime(),
+  );
+
+  useEffect(() => {
+    if (payments.length > 0) {
+      const lastPayment = paymentsOrder[0];
+      setLat(lastPayment.LAT);
+      setLng(lastPayment.LNG);
+    }
+  }, [payments]);
+
   if (loading || productosLoading) {
     return (
       <View style={saleDetailsStyles.loaderContainer}>
@@ -334,13 +351,13 @@ const SaleDetails = () => {
             userLocationCalloutEnabled
             showsUserLocation
             initialRegion={{
-              latitude: 18.462357,
-              longitude: -97.388999,
+              latitude: lat,
+              longitude: lng,
               latitudeDelta: 0.0222,
               longitudeDelta: 0.01,
             }}>
             <Marker
-              coordinate={{latitude: 18.462357, longitude: -97.388999}}
+              coordinate={{latitude: lat, longitude: lng}}
               title={sale.CLIENTE}
               description={sale.CALLE}
             />
@@ -417,6 +434,14 @@ const SaleDetails = () => {
           <Text style={saleDetailsStyles.textTertiary}>Limite de crédito:</Text>
           <Text style={saleDetailsStyles.textSecondary}>
             ${sale.LIMITE_CREDITO}
+          </Text>
+        </View>
+        <View style={saleDetailsStyles.personalInfoItem}>
+          <Text style={saleDetailsStyles.textTertiary}>
+            Precio a {sale.TIEMPO_A_CORTO_PLAZOMESES} mes(es):
+          </Text>
+          <Text style={saleDetailsStyles.textSecondary}>
+            ${sale.MONTO_A_CORTO_PLAZO}
           </Text>
         </View>
         <View style={saleDetailsStyles.personalInfoItem}>
@@ -711,7 +736,7 @@ const SaleDetails = () => {
       </Pressable>
       <View style={saleDetailsStyles.payments}>
         <Text style={saleDetailsStyles.subtitle}>Historial de pagos</Text>
-        {payments.map((payment: Payment) => (
+        {paymentsOrder.map((payment: Payment) => (
           <PaymentItem
             key={payment.ID}
             payment={payment}
@@ -755,7 +780,7 @@ const PaymentItem = ({
     <Pressable style={saleDetailsStyles.paymentItem} onPress={() => onPress()}>
       <Text style={saleDetailsStyles.textSecondary}>{payment.COBRADOR}</Text>
       <Text style={saleDetailsStyles.textTertiary}>
-        {payment.FECHA_HORA_PAGO.toDate().toLocaleDateString()}
+        {dayjs(payment.FECHA_HORA_PAGO.toDate()).format('DD/MM/YYYY - hh:mm a')}
       </Text>
       <Text style={saleDetailsStyles.textSecondary}>${payment.IMPORTE}</Text>
       <Text style={saleDetailsStyles.textTertiary}>

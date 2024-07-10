@@ -36,6 +36,7 @@ const saleInitialState: Sale = {
   VENDEDOR_3: '',
   ZONA_CLIENTE_ID: 0,
   ZONA_NOMBRE: '',
+  MONTO_A_CORTO_PLAZO: 0,
 };
 
 const useGetSale = (saleId: string) => {
